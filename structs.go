@@ -144,3 +144,56 @@ type RecommendationsResponse struct {
 	Message string           `json:"message"`
 	Results []Recommendation `json:"results"`
 }
+
+// User holds the info for a specific user
+type User struct {
+	ConnectionCount   int           `json:"connection_count"`
+	CommonLikeCount   int           `json:"common_like_count"`
+	CommonFriendCount int           `json:"common_friend_count"`
+	CommonLikes       []string      `json:"common_likes"`
+	CommonInterests   []string      `json:"common_interests"`
+	UncommonInterests []string      `json:"uncommon_interests"`
+	CommonFriends     []string      `json:"common_friends"`
+	ID                string        `json:"_id"`
+	Badges            []interface{} `json:"badges"`
+	Bio               string        `json:"bio"`
+	BirthDate         time.Time     `json:"birth_date"`
+	Gender            int           `json:"gender"`
+	Name              string        `json:"name"`
+	PingTime          time.Time     `json:"ping_time"`
+	Photos            []struct {
+		URL            string `json:"url"`
+		ProcessedFiles []struct {
+			URL    string `json:"url"`
+			Height int    `json:"height"`
+			Width  int    `json:"width"`
+		} `json:"processedFiles"`
+		Extension        string  `json:"extension"`
+		ID               string  `json:"id"`
+		FileName         string  `json:"fileName"`
+		YoffsetPercent   float64 `json:"yoffset_percent,omitempty"`
+		XoffsetPercent   float64 `json:"xoffset_percent,omitempty"`
+		YdistancePercent float64 `json:"ydistance_percent,omitempty"`
+		XdistancePercent float64 `json:"xdistance_percent,omitempty"`
+	} `json:"photos"`
+	Jobs []struct {
+		Company struct {
+			Name string `json:"name"`
+		} `json:"company"`
+		Title struct {
+			Name string `json:"name"`
+		} `json:"title"`
+	} `json:"jobs"`
+	Schools []struct {
+		Name string `json:"name"`
+		ID   string `json:"id"`
+	} `json:"schools"`
+	BirthDateInfo string `json:"birth_date_info"`
+	DistanceMi    int    `json:"distance_mi"`
+}
+
+// UserResponse is the profile response you get for a specific UserResponse
+type UserResponse struct {
+	Status  int  `json:"status"`
+	Results User `json:"results"`
+}

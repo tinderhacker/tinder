@@ -11,6 +11,7 @@ func Init(FacebookUserID string, FacebookToken string) *Tinder {
 	Facebook := make(map[string]string)
 	Facebook["facebook_token"] = FacebookToken
 	Facebook["facebook_id"] = FacebookUserID
+
 	Values := &url.Values{}
 	Client := &http.Client{}
 
