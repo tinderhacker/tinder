@@ -13,7 +13,8 @@ import (
 func (tinder *Tinder) Auth() error {
 	Headers := tinder.Headers
 	Headers.Add("facebook_token", tinder.Facebook["facebook_token"])
-	Headers.Add("facebook_ID", tinder.Facebook["facebook_ID"])
+	Headers.Add("facebook_ID", tinder.Facebook["facebook_id"])
+
 	response, err := http.PostForm(tinder.Host+"/auth", Headers)
 	if err != nil {
 		return err
@@ -267,20 +268,8 @@ func (tinder *Tinder) Pass(recID string) error {
 
 //GetRecommendations will get a list of people to like or pass on.
 func (tinder *Tinder) GetRecommendations(limit int) (resp RecommendationsResponse, err error) {
-	var RecommendationsEmpty RecommendationsResponse
-	type reqBod struct {
-		Limit int `json:"limit"`
-	}
-	ReqStruct := &reqBod{
-		Limit: limit,
-	}
-	ReqData, err := json.Marshal(ReqStruct)
-	if err != nil {
-		return RecommendationsEmpty, err
-	}
-	ReqReader := bytes.NewReader(ReqData)
 
-	req, err := http.NewRequest("GET", tinder.Host+"/user/recs", ReqReader)
+	req, err := http.NewRequest("GET", tinder.Host+"/user/recs", nil)
 	if err != nil {
 		return resp, err
 	}
@@ -309,6 +298,33 @@ func (tinder *Tinder) GetRecommendations(limit int) (resp RecommendationsRespons
 	}
 
 	return resp, nil
+}
+
+//GetUser will get info on a specific user.
+func (tinder *Tinder) GetUser(userID string) (resp UserResponse, err error) {
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/user/%s", tinder.Host, userID), nil)
+	if err != nil {
+		return resp, err
+	}
+
+	req = tinder.SetRequiredHeaders(req)
+	response, err := tinder.Client.Do(req)
+	if err != nil {
+		return resp, err
+	}
+	defer response.Body.Close()
+
+	data, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return resp, err
+	}
+
+	if err = json.Unmarshal([]byte(data), &resp); err != nil {
+		return resp, err
+	}
+
+	return
 }
 
 //SendMessage will send a message to the the given ID.
