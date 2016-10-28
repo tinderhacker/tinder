@@ -121,6 +121,7 @@ type Photo struct {
 	YOffsetPercent   float64         `json:"yoffset_percent"`
 	XOffsetPercent   float64         `json:"xoffset_percent"`
 	ProcessedFiles   []ProcessedFile `json:"processedFiles"`
+	URL              string          `json:"url"`
 }
 
 //Recommendation holds the info of a Recommendation.
