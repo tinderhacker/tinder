@@ -257,7 +257,7 @@ func (tinder *Tinder) Like(recID string) (match bool, err error) {
 	return swipeResp.Match, nil
 }
 
-//Pass wil 'swipe left' on the given ID
+//Pass will 'swipe left' on the given ID
 func (tinder *Tinder) Pass(recID string) error {
 	_, err := swipe(tinder, recID, "like")
 	if err != nil {
