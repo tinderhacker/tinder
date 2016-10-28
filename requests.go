@@ -221,6 +221,13 @@ func swipe(tinder *Tinder, recID string, method string) (swipeResp SwipeResponse
 		return swipeResp, err
 	}
 
+	swipeResp, err = doSwipe(tinder, req)
+
+	return
+}
+
+func doSwipe(tinder *Tinder, req *http.Request) (swipeResp SwipeResponse, err error) {
+
 	req = tinder.SetRequiredHeaders(req)
 	response, err := tinder.Client.Do(req)
 	if err != nil {
