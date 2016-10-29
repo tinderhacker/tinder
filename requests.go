@@ -226,6 +226,18 @@ func swipe(tinder *Tinder, recID string, method string) (swipeResp SwipeResponse
 	return
 }
 
+func super(tinder *Tinder, recID string, method string) (swipeResp SwipeResponse, err error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/like/%s/super", tinder.Host, recID), nil)
+	if err != nil {
+		return swipeResp, err
+	}
+
+	swipeResp, err = doSwipe(tinder, req)
+
+	return
+
+}
+
 func doSwipe(tinder *Tinder, req *http.Request) (swipeResp SwipeResponse, err error) {
 
 	req = tinder.SetRequiredHeaders(req)
