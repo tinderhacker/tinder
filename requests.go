@@ -278,7 +278,7 @@ func (tinder *Tinder) Like(recID string) (match bool, err error) {
 
 //Pass will 'swipe left' on the given ID
 func (tinder *Tinder) Pass(recID string) error {
-	_, err := swipe(tinder, recID, "like")
+	_, err := swipe(tinder, recID, "pass")
 	if err != nil {
 		return err
 	}
